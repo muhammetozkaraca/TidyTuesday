@@ -87,14 +87,9 @@ board_games %>%
 ## Find a way to make '1930' bold. I tried ** but did not work.
 
 
-head(board_games)
-colnames(board_games)
-
-unique(board_games$boardgamecategory)
-str(board_games$boardgamecategory)
-head(board_games$boardgamecategory)
 
 
+### Categories Plot ###
 
 
 board_games$boardgamecategory <- substring(board_games$boardgamecategory,3,nchar(board_games$boardgamecategory)-2)
@@ -136,56 +131,59 @@ top_categories_data <- splitted_data %>%
 
 
 top_categories_data$categoriestype <- trimws(top_categories_data$categoriestype)
-# top_categories_data$mean_average <- round(top_categories_data$mean_average, 2)
 top_categories_data$categoriestype <- as.factor(top_categories_data$categoriestype)
 
 
-str(top_categories_data)
-
-pp <- streamgraph(top_categories_data, key="categoriestype", value="count", date="yearpublished", 
-                  height="300px", width="1000px")
+# pp <- streamgraph(top_categories_data, key="categoriestype", value="count", date="yearpublished", 
+#                  height="300px", width="1000px")
 
 
-top_categories_data %>%
-  streamgraph(key="categoriestype", value="count", date="yearpublished", offset="zero") %>%
-  sg_fill_brewer("BuPu")
+# top_categories_data %>%
+#  streamgraph(key="categoriestype", value="count", date="yearpublished", offset="zero") %>%
+#  sg_fill_brewer("BuPu")
 
   
-geom_stream()
 
 ggplot(top_categories_data, aes(x = yearpublished, y = count, 
                                 fill = categoriestype)) + 
-  geom_stream(type = "ridge") +
+  geom_stream(type = "ridge", alpha = 0.8) +
   scale_fill_brewer("BuPu") +
+  guides(fill=guide_legend(title="")) +
   theme_minimal() +
-  scale_x_continuous(expand = c(1950, 2022)) + 
-  scale_y_continuous(expand = c(0, 500))
-
-
-  geom_stream_label(aes(label = categoriestype))
-
-
-
-
-data <- data.frame(
-  year=rep(seq(1990,2016) , each=10),
-  name=rep(letters[1:10] , 27),
-  value=sample( seq(0,1,0.0001) , 270)
-)
-
-str(data)
-
-pp1 <- streamgraph(data, key="name", value="value", date="year", height="300px", width="1000px")
-
-
-
-
-
-
-
-
-
-
+  scale_x_continuous(
+    breaks = c(1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020)
+  ) +
+  labs(title = "Distribution of New Board Games' Categories", 
+       subtitle = "<span style = 'font-size:12pt'>Board games are an important part of daily life. Thanks to them, not only
+    children but also adults can spend time having fun. This graph is prepared to visualize the top 5 categories of new board games published
+    <span style='color:#B22222'>since 1950</span>.",
+       # subtitle = "Evolution of the Games",
+       caption = "#TidyTuesday Challenge | Muhammet Ozkaraca",
+       x = "Year - Published",
+       y = "Number of Board Games") +
+  theme(
+    plot.title.position = "plot",
+    plot.title = element_text(family = "title",
+                              size = 14),
+    plot.subtitle = element_textbox_simple(
+      family = "subtitle1",
+      size = 12,
+      lineheight = 1,
+      padding = margin(5.5, 5.5, 5.5, 5.5),
+      margin = margin(-6, 0, 5.5, -4),
+      fill = "white"
+    ),
+    # plot.subtitle = element_markdown(valign = TRUE, hjust = 0, halign = TRUE, linewidth = 1),
+    # plot.subtitle = element_textbox_simple(size = 12, lineheight = 1, padding = margin(0, 0, 5, 0),
+    #                                       family = "subtitle"),
+    plot.caption = element_text(family = "subtitle"),
+    axis.text.x = element_text(family = "title"),
+    axis.text.y = element_text(family = "title"),
+    axis.title.x = element_text(family = "title1"),
+    axis.title.y = element_text(family = "title1"),
+    legend.position = "top"
+  ) 
+  
 
 
 
