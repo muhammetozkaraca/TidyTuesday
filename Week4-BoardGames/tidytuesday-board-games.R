@@ -3,6 +3,8 @@ library(ggplot2)
 library(gt)
 library(showtext) # to add special fonts from google
 library(ggtext)
+library(ggstream)
+library(streamgraph)
 
 ratings <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-01-25/ratings.csv')
 details <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-01-25/details.csv')
@@ -85,25 +87,95 @@ board_games %>%
 ## Find a way to make '1930' bold. I tried ** but did not work.
 
 
+head(board_games)
+colnames(board_games)
+
+unique(board_games$boardgamecategory)
+str(board_games$boardgamecategory)
+head(board_games$boardgamecategory)
 
 
 
 
+board_games$boardgamecategory <- substring(board_games$boardgamecategory,3,nchar(board_games$boardgamecategory)-2)
+board_games$boardgamecategory <- str_replace_all(board_games$boardgamecategory, c("'" = ""))
+
+
+splitted_data <-separate(board_games, col = boardgamecategory, 
+                          into = c("categories1","categories2","categories3",
+                                   "categories4","categories5","categories6",
+                                   "categories7","categories8","categories9",
+                                   "categories10","categories11","categories12",
+                                   "categories13","categories14"), sep=",") 
+
+
+# sum(!is.na(splitted_data$categories15)) checking whether all values are na or not
+
+
+
+top_categories <- splitted_data %>%  
+  pivot_longer(cols = categories1:categories14, names_to = "topcategories", values_to = "categoriestype", values_drop_na = TRUE) %>%
+  select(-c(topcategories)) %>%
+  group_by(categoriestype) %>%
+  summarise(count = n()) %>%
+  arrange(desc(count))
+
+# Top 5 categories are: Card Game, War Game, Fantasy, Party Game, Abstract Strategy
+
+top_categories_data <- splitted_data %>%
+  pivot_longer(cols = categories1:categories14, names_to = "topcategories", values_to = "categoriestype", values_drop_na = TRUE) %>%
+  select(-c(topcategories)) %>%
+  filter(categoriestype %in% c("Card Game", " Wargame", " Fantasy", " Party Game", "Abstract Strategy")) %>%
+  group_by(yearpublished, categoriestype) %>%
+  mutate(count = n()) %>%
+  select(categoriestype, yearpublished, count) %>%
+  distinct(categoriestype, .keep_all = TRUE) %>%
+  as.data.frame() %>%
+  filter(yearpublished > 1949) %>%
+  arrange(desc(yearpublished), categoriestype)
+
+
+top_categories_data$categoriestype <- trimws(top_categories_data$categoriestype)
+# top_categories_data$mean_average <- round(top_categories_data$mean_average, 2)
+top_categories_data$categoriestype <- as.factor(top_categories_data$categoriestype)
+
+
+str(top_categories_data)
+
+pp <- streamgraph(top_categories_data, key="categoriestype", value="count", date="yearpublished", 
+                  height="300px", width="1000px")
+
+
+top_categories_data %>%
+  streamgraph(key="categoriestype", value="count", date="yearpublished", offset="zero") %>%
+  sg_fill_brewer("BuPu")
+
+  
+geom_stream()
+
+ggplot(top_categories_data, aes(x = yearpublished, y = count, 
+                                fill = categoriestype)) + 
+  geom_stream(type = "ridge") +
+  scale_fill_brewer("BuPu") +
+  theme_minimal() +
+  scale_x_continuous(expand = c(1950, 2022)) + 
+  scale_y_continuous(expand = c(0, 500))
+
+
+  geom_stream_label(aes(label = categoriestype))
 
 
 
 
+data <- data.frame(
+  year=rep(seq(1990,2016) , each=10),
+  name=rep(letters[1:10] , 27),
+  value=sample( seq(0,1,0.0001) , 270)
+)
 
+str(data)
 
-
-
-
-
-
-
-
-
-
+pp1 <- streamgraph(data, key="name", value="value", date="year", height="300px", width="1000px")
 
 
 
