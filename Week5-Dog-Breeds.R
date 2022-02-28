@@ -16,7 +16,7 @@ breed_rank_all <- readr::read_csv('https://raw.githubusercontent.com/rfordatasci
 rank <- breed_rank_all %>%
   select(Breed, `2020 Rank`, Image) %>%
   arrange(`2020 Rank`) %>%
-  slice (1:3) 
+  slice (1:5)
 
 gt::gt(rank) %>%
   gt_theme_nytimes () %>%
