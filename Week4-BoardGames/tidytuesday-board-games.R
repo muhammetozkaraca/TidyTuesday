@@ -5,6 +5,9 @@ library(showtext) # to add special fonts from google
 library(ggtext)
 library(ggstream)
 library(streamgraph)
+library(gt)
+library(gtExtras)
+
 
 ratings <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-01-25/ratings.csv')
 details <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-01-25/details.csv')
@@ -12,6 +15,8 @@ details <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/ti
 board_games <-
   ratings %>%
   left_join(details, by = "id")
+
+
 
 
 font_add_google("IBM Plex Mono", family = "title") #find the name of font from google, call it and name it in family argument to use locally
@@ -85,9 +90,6 @@ board_games %>%
 # What I could not succeed?
  
 ## Find a way to make '1930' bold. I tried ** but did not work.
-
-
-
 
 ### Categories Plot ###
 
@@ -184,12 +186,6 @@ ggplot(top_categories_data, aes(x = yearpublished, y = count,
     legend.position = "top"
   ) 
   
-
-
-
-
-
-
 
 
 
