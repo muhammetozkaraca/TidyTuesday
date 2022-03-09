@@ -15,7 +15,6 @@ erasmus <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/ti
 country_codes <- countrycode::codelist %>%
   select(iso2c, country_name = country.name.en)
 
-max(erasmus$academic_year)
 
 font_add_google("Noto Serif Display", family = "title")
 font_add_google("Libre Caslon Display", family = "subtitle")
@@ -59,7 +58,7 @@ p1 <- ggplot(data = top_incoming,
   geom_text(aes(x = country_name, y = 0, label = paste0(country_name, " - ", total)),
             hjust = 1.05, size = 2, colour = rep(c('#FA8334', '#42047E'), 10)) +
   coord_polar(theta = "y", start = 0) +
-  ylim(c(0, 40)) +
+  ylim(c(0, 100)) +
   scale_fill_manual(values = rep(c('#FA8334', '#42047E'), 10)) +
   labs(title = "Incoming Students",
        subtitle = "(2015-2020)") +
