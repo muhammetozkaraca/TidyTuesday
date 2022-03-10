@@ -11,6 +11,7 @@ library(showtext)
 library(ggtext)
 library(ggrepel)
 library(glue)
+library(fontawesome)
 
 font_add_google("Martel", family = "title")
 font_add_google("Libre Caslon Display", family = "subtitle")
@@ -54,7 +55,6 @@ erasmus_tidied <- erasmus %>%
     TRUE ~ country_name)) %>%
   distinct()
 
-# caption1 <- glue("Graphic: {get_icon('twitter', 10, fill = list(bg = bg, img = light))} @danoehm / Source: Data.Europa.eu / Code: {get_icon('github', 10, fill = list(bg = bg, img = light))} doehm/tidytuesday #rstats #tidytuesday")
 
 plot <- ggplot(erasmus_tidied, aes(x = average, y = total, color = female_prop)) +
   geom_point() +
@@ -62,8 +62,8 @@ plot <- ggplot(erasmus_tidied, aes(x = average, y = total, color = female_prop))
   geom_vline(xintercept = 24.3, alpha = 0.5, color = "grey") +
   geom_text_repel(label = erasmus_tidied$country_name, family = "mono", force = 2) +
   theme_bw() +
-  labs(x = "Participant Age Average",
-       y = "Total Number of Participant",
+  labs(x = "Participant Age Average per Country",
+       y = "Total Number of Participant per Country",
        title = "Erasmus Participation",
        subtitle = "Several countries have participated in the Erasmus program since its debut on 2014. This plot demonstrates the average number of participant age \n and the average number of participants from each country",
        color = "Female\nProportion",
@@ -75,23 +75,11 @@ plot <- ggplot(erasmus_tidied, aes(x = average, y = total, color = female_prop))
     plot.subtitle = element_text(hjust = 0.5, family = "subtitle", size = 14),
     plot.caption = element_text(hjust = 0.8, family = "caption", size = 9),
     legend.position = c(0.9, 0.6),
-    legend.title = element_text(family = "caption", hjust = 0.9, vjust = 0.7),
+    legend.title = element_text(family = "caption", hjust = 1, vjust = 0.7),
     legend.title.align = 0.5,
-    legend.justification = 0.5,
     axis.title.x = element_text(family = "axis"),
     axis.title.y = element_text(family = "axis"),
     panel.border = element_blank(),
     axis.ticks = element_blank())
   
-ggsave("plot.png", height = 10, width = 14)
-  
-
-
-  
-  
-  
-  
-  
-  
-  
-  
+ggsave("scatter-plot.png", height = 10, width = 14)
