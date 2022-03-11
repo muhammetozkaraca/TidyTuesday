@@ -5,13 +5,12 @@ library(ggplot2)
 library(cowplot)
 library(grid)
 library(ggplotify)
-library(skimr)
 library(patchwork)
 library(showtext)
 library(ggtext)
 library(ggrepel)
-library(glue)
-library(fontawesome)
+library(paletteer)
+
 
 font_add_google("Martel", family = "title")
 font_add_google("Libre Caslon Display", family = "subtitle")
@@ -55,26 +54,38 @@ erasmus_tidied <- erasmus %>%
     TRUE ~ country_name)) %>%
   distinct()
 
+paletteer_c(`"scico::bilbao"`, n=5)
+paletteer_c(`"scico::davos"`, n=5)
+paletteer_c(`"scico::acton"`, n=5)
+paletteer_c(`"ggthemes::Classic Green-Blue"`, n=10)
 
 plot <- ggplot(erasmus_tidied, aes(x = average, y = total, color = female_prop)) +
   geom_point() +
   geom_hline(yintercept = 318, alpha = 0.5, color = "grey") +
-  geom_vline(xintercept = 24.3, alpha = 0.5, color = "grey") +
+  geom_vline(xintercept = 23.3, alpha = 0.5, color = "grey") +
   geom_text_repel(label = erasmus_tidied$country_name, family = "mono", force = 2) +
   theme_bw() +
+  scale_colour_paletteer_c("scico::batlow") +
+  # scale_color_continuous(palette = "Pastel1") +
+  # scale_colour_gradientn(colours = topo.colors(10)) +
   labs(x = "Participant Age Average per Country",
        y = "Total Number of Participant per Country",
        title = "Erasmus Participation",
-       subtitle = "Several countries have participated in the Erasmus program since its debut on 2014. This plot demonstrates the average number of participant age \n and the average number of participants from each country",
+       subtitle = "<span style='font-size:14pt'>Several countries have participated in the Erasmus program since its debut in 2014. According to the data between <br>
+       2014 and 2020, while the participants' mean age is <span style='color:#0072B2;'>23.3</span>, the average number of participants from each country is 
+       <span style='color:#D55E00;'>318</span>.
+       </span>",
        color = "Female\nProportion",
-       caption = "Muhammet Özkaraca") +
+       caption = "Data: Data.Europa | Plot: @muhammetozkrca | TidyTuesday-Week 10") +
   background_grid(major = 'none', minor = "none") +
-  scale_y_continuous(breaks = c(500,1000)) +
+  scale_y_continuous(breaks = c(250, 500, 750, 1000)) +
+  scale_x_continuous(breaks = c(20, 22.5, 25, 27.5, 30)) +
   theme(
     plot.title = element_text(hjust = 0.5, family = "title", size = 20),
-    plot.subtitle = element_text(hjust = 0.5, family = "subtitle", size = 14),
-    plot.caption = element_text(hjust = 0.8, family = "caption", size = 9),
+    plot.subtitle = element_markdown(hjust = 0.5, family = "subtitle", size = 14), # note that to color numbers differently, I used element_markdown not element_text function
+    plot.caption = element_text(hjust = 0.5, family = "caption", size = 7),
     legend.position = c(0.9, 0.6),
+    legend.justification = "center",
     legend.title = element_text(family = "caption", hjust = 1, vjust = 0.7),
     legend.title.align = 0.5,
     axis.title.x = element_text(family = "axis"),
@@ -82,4 +93,4 @@ plot <- ggplot(erasmus_tidied, aes(x = average, y = total, color = female_prop))
     panel.border = element_blank(),
     axis.ticks = element_blank())
   
-ggsave("scatter-plot.png", height = 10, width = 14)
+ggsave("scatter-plot.png", height = 7, width = 11)
