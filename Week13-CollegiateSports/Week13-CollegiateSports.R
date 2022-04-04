@@ -11,11 +11,14 @@ library(cowplot)
 tuesdata <- tidytuesdayR::tt_load(2022, week = 13)
 sports <- tuesdata$sports
 
-summary(sports)
-
+# Making Circle Plot
 sports_expenditures <- sports %>%
   group_by(sports) %>%
-  summarize(expenditure = sum(total_exp_menwomen, na.rm = TRUE))
+  summarize(expenditure = sum(total_exp_menwomen, na.rm = TRUE)) %>%
+  mutate(id = row(.),
+         rounded = round(expenditure/1000000000, 2),
+         label = paste0(sports,"\n",rounded," B USD"))
+
 
 packing <- circleProgressiveLayout(sports_expenditures$expenditure, sizetype='area')
 sports_expenditures <- cbind(sports_expenditures, packing)
@@ -38,7 +41,7 @@ plot <- ggplot() +
   geom_polygon(data = dat.gg, aes(x, y, group = id, fill= value), colour = "black", alpha = 0.6) +
   paletteer::scale_fill_paletteer_c("scico::lisbon") +
   # for discrete values; paletteer::scale_fill_paletteer_d("rtist::vangogh") or scale_color_paletteer_d("nord::aurora")
-  geom_text(data = sports_expenditures, aes(x, y, size=expenditure, label = sports)) +
+  geom_text(data = sports_expenditures, aes(x, y, size=expenditure, label = label)) +
   # scale_size_continuous(range = c(1,4)) +
   theme_void() + 
   coord_equal() +
