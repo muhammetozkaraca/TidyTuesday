@@ -37,7 +37,7 @@ data <-
   select(state_abb, dsci, date, year, month, day, state_name, county, monthly_average, geometry)
 
 font_add_google("Fascinate Inline", family = "title")
-font_add_google("Cormorant Garamond", family = "subtitle")
+font_add_google("Libre Caslon Display", family = "subtitle")
 font_add_google("Libre Caslon Display", family = "caption")
 font_add_google("Patrick Hand", family = "year")
 
@@ -48,21 +48,25 @@ font_add('fa-solid', 'fonts/Font Awesome 6 Free-Solid-900.otf')
 
 showtext_auto()
 
+# to convert the date from d/m/y format to m/y format, 
+# we need to complete the following 2 lines of code
+desired_date_format <- stamp( "01-2020", orders = "my") 
+data$month_year <- desired_date_format(data$date)
+
+
 plot <- data %>%
   filter(year>2019) %>%
-  group_by(state_abb, county_code, year, month) %>%
   ggplot() +
-  geom_sf(aes(fill = dsci, geometry = geometry), color = "white", size = 0.1) +
+  geom_sf(aes(fill = monthly_average, geometry = geometry), color = "white", size = 0.1) +
   paletteer::scale_fill_paletteer_c("ggthemes::Orange",
                                     name = "Level of \nDrought",
                                     limits = c(0, 500), breaks = c(0, 250, 500)) +
   ggthemes::theme_map() +
-  transition_states(date, transition_length = 1, state_length = 1) +
+  transition_manual(month_year) +
   shadow_mark() +
   labs(title = "Drought Level in the US Counties (2020-2022)",
        subtitle = "Climate change is becoming more apparent day by day. Accordingly, this animation illustrates monthly level of drought in the US counties <span style = 'font-size:30pt;color:#E69F00;'>since 2020.</span> <br>
-       The tone of the color for each county is based on the Drought Severity and Coverage Index. While <span style = 'font-size:30pt;color:#E69F00;'>0</span> indicates none of the area is <br> abnormally dry or in drought, <span style = 'font-size:30pt;color:#E69F00;'>500</span> means that all of the area is in exceptional drought.
-       <br> Year: {closest_state}",
+       The tone of the color for each county is based on the Drought Severity and Coverage Index. While <span style = 'font-size:30pt;color:#E69F00;'>0</span> indicates none of the area is <br> abnormally dry or in drought, <span style = 'font-size:30pt;color:#E69F00;'>500</span> means that all of the area is in exceptional drought.",
        caption = "Source: National Integrated Drought Information System | Plot: <span style='font-family:fa-brands'>&#xf09b;</span> muhammetozkaraca <span style='font-family:fa-brands'>&#xf099;</span> muhammetozkrca | #TidyTuesday-Week 24") + 
   theme(
     plot.background = element_rect(fill = "white",colour = NA),
@@ -81,12 +85,11 @@ plot <- data %>%
     legend.title = element_text(size=14), 
     legend.text = element_text(size=10))
 
-
 plot %>%
-  animate(fps = 20 , nframe = 24, 
+  animate(fps = 20 , nframe = 300, 
           height = 2000 , width = 2340,
           start_pause = 1, end_pause = 1,
-          renderer = gifski_renderer(here::here("Week24-USDroughts/us_droughts_county_level1.gif")))
+          renderer = gifski_renderer(here::here("Week24-USDroughts/us_droughts_county_level.gif")))
 
 
 
