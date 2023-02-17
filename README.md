@@ -13,6 +13,6 @@ The visualizations I made to contribute to the `TidyTuesday` challenge on an ann
 ![Screenshot](2023/Week7-HollywoodAge/hollywood-movies.png)
 
 
-### **[Week 4 - Survivors Gap](2023/Week4-Survivors)**
+### **[Week 4 - Survivors](2023/Week4-Survivors)**
 ![Screenshot](2023/Week4-Survivors/survivors.png)
 
