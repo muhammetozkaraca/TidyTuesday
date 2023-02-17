@@ -2,7 +2,17 @@
 
 ## Sub-Repositories
 
-You can find the visualizations I made to contribute to the 'TidyTuesday' challenge on yearly basis in the following links: 
+The visualizations I made to contribute to the `TidyTuesday` challenge on an annual basis can be found at the following links: 
 
 - [TidyTuesday 2023](2023)
 - [TidyTuesday 2022](2022)
+
+## 2023 Contributions
+
+### **[Week 7 - Hollywood Age Gap](2023/Week7-HollywoodAge)**
+![Screenshot](2023/Week7-HollywoodAge/hollywood-movies.png)
+
+
+### **[Week 4 - Survivors Gap](2023/Week4-Survivors)**
+![Screenshot](2023/Week4-Survivors/survivors.png)
+
