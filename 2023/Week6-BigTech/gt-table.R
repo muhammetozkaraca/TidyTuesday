@@ -40,33 +40,36 @@ data <- big_tech_stock_prices %>%
 
 base_url = "https://raw.githubusercontent.com/tashapiro/TidyTuesday/master/2023/W6/logos/"
 
+
+combine_word <- function(company, stock_symbol){
+  glue::glue(
+    "<div style='line-height:10px'><span style='font-weight:bold;font-variant:small-caps;font-size:14px'>{company}</div>
+        <div style='line-height:12px'><span style ='font-weight:bold;color:grey;font-size:10px'>{stock_symbol}</span></div>"
+  )
+}
+
 gt <- data %>%
   mutate(stock_symbol1 = stock_symbol,
          stock_symbol = paste0("SYMBL: ",stock_symbol),
          logo = glue::glue('{base_url}{stock_symbol1}.png')) %>%
   ungroup() %>%
   select(logo, company, stock_symbol, closing_prices, prices_last_month, prices_last_six_month, prices_last_year) %>%
+  mutate(combo = combine_word(company, stock_symbol),
+         combo =  map(combo, gt::html)) %>%
+  select(logo, combo, everything(), -company, -stock_symbol) %>%
   gt() %>%
   gtExtras::gt_img_rows(columns = 'logo', height = 50) %>%
   gt_plt_sparkline(closing_prices) %>%
   gt_plt_sparkline(prices_last_year, type = "shaded", label = FALSE, palette = c("lightgrey", rep("transparent", 3), "#B35A20")) %>%
   gt_plt_sparkline(prices_last_six_month, type = "shaded", label = FALSE, palette = c("lightgrey", rep("transparent", 3), "#BFD5C9")) %>%
   gt_plt_sparkline(prices_last_month, type = "shaded", label = FALSE, palette = c("lightgrey", rep("transparent", 3), "#006373")) %>%
-  cols_label(company = "COMPANY",
+  cols_label(combo = "",
              prices_last_year = "1Y",
              prices_last_six_month = "6M",
              prices_last_month = "1M",
              closing_prices = "Closing Prices over Time\n(2020-2022)",
-             logo = "") %>%
-  cols_merge(columns = vars(company, stock_symbol)) %>%
-  text_transform(locations = cells_body(columns = vars(company, stock_symbol)),
-                 fn = function(x){
-                   company <- word(x, 1)
-                   stock <- word(x, -1)
-                   glue::glue("<div><span style='font-weight:bold;font-variant:small-caps;font-size:14px'>{company}</div>
-        <div><span style ='font-weight:bold;color:grey;font-size:10px'>{stock}</span></div>")}) %>%
-  cols_width(company ~ px(145),
-             closing_prices ~ px(65)) %>%
+             logo = "COMPANY") %>%
+  cols_width(closing_prices ~ px(65)) %>%
   tab_header(title = "BIG TECH FIRMS' STOCK PRICES TRENDS",
              subtitle = "Daily stock prices trend for Big Tech Firms in 2022") %>%
   tab_spanner(label = "Periods", columns = c(prices_last_year,prices_last_six_month, prices_last_month)) %>%
@@ -74,13 +77,14 @@ gt <- data %>%
             style = cell_text(align = 'left', font = 'Lora', size = 'xx-large', weight = 600)) %>% 
   tab_style(locations = cells_title('subtitle'), 
             style = cell_text(align = 'left', font = 'Merriweather', size = 'x-large')) %>%
-  tab_style(locations = cells_column_labels(columns = c("company")),
-            style = cell_text(align = 'left', font = 'Archivo', size = 'large', weight = 'bold')) %>%
+  tab_style(locations = cells_column_labels(columns = c("logo")),
+            style = cell_text(align = "center", font = 'Archivo', size = 'large', weight = 'bold')) %>%
   tab_style(locations = cells_column_labels(columns = c("closing_prices", "prices_last_year", "prices_last_six_month", "prices_last_month")),
             style = cell_text(align = 'center', font = 'Archivo', size = 'large', weight = 'bold')) %>%
-  tab_style(locations = cells_column_labels(columns = c("logo", "company", "closing_prices", "prices_last_year", "prices_last_six_month", "prices_last_month")),
+  tab_style(locations = cells_column_labels(columns = c("logo", "combo", "closing_prices", "prices_last_year", "prices_last_six_month", "prices_last_month")),
             style = cell_borders(sides = "bottom", color = "black", weight = px(3))) %>%
   tab_style(locations =  cells_column_spanners(), style = cell_text(align = 'center', weight = 'bold', font = 'Nunito')) %>%
+  cols_align(align = "left", columns = vars(combo)) %>%
   tab_options(heading.align = "left",
               table.border.top.color = "white",
               table.border.bottom.color = "black",
@@ -97,6 +101,6 @@ gt <- data %>%
                  
                  
                 
-gtsave(gt, "/Users/muhammetozkaraca/Desktop/tab_3.png")
+gtsave(gt, "/Users/muhammetozkaraca/Desktop/tab_6.png")
 gtsave(gt, "/Users/muhammetozkaraca/Desktop/tab1.png")
 
