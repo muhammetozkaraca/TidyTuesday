@@ -21,7 +21,7 @@ font_add('fa-solid', 'fonts/Font Awesome 6 Free-Solid-900.otf')
 
 showtext_auto()
 
-world_grid <- read_csv("worldtilegrid.txt")
+world_grid <- read_csv("worldtilegrid.txt") #file is available to download at https://www.maartenlambrechts.com/2017/10/22/tutorial-a-worldtilegrid-with-ggplot2.html
 tt <- tidytuesdayR::tt_load('2023-05-30')
 tt <- tt$centenarians 
 countries_count <- tt %>%
