@@ -9,6 +9,10 @@ The visualizations I made to contribute to the `TidyTuesday` challenge on an ann
 
 ## 2023 Contributions
 
+### **[Week 24 SAFI Project](2023/Week_24_SAFIProject)**
+![Screenshot](2023/Week_24_SAFIProject/plot.png)
+
+
 ### **[Week 7 - Hollywood Age Gap](2023/Week7-HollywoodAge)**
 ![Screenshot](2023/Week7-HollywoodAge/hollywood-movies.png)
 ![Screenshot](2023/Week7-HollywoodAge/male-female-ages.png)
