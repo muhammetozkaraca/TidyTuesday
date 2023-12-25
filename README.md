@@ -9,6 +9,12 @@ The visualizations I made to contribute to the `TidyTuesday` challenge on an ann
 
 ## 2023 Contributions
 
+### **[Week 50 - Holiday Movies](2023/Week_50_HolidayMovies)**
+![Screenshot](2023/Week_50_HolidayMovies/plot.png)
+
+### **[Week 26 - US Populated Places](2023/Week_26_USPopulatedPlaces)**
+![Screenshot](2023/Week_26_USPopulatedPlaces/plot.png)
+
 ### **[Week 24 - SAFI Project](2023/Week_24_SAFIProject)**
 ![Screenshot](2023/Week_24_SAFIProject/plot.png)
 
@@ -21,9 +27,6 @@ The visualizations I made to contribute to the `TidyTuesday` challenge on an ann
 ### **[Week 20 - Tornados](2023/Week_20_Tornados)**
 ![Screenshot](2023/Week_20_Tornados/tornados-us1.png)
 ![Screenshot](2023/Week_20_Tornados/tornados-us2.png)
-
-### **[Week 17 - London Marathon](2023/Week_17_LondonMarathon)**
-![Screenshot](2023/Week_17_LondonMarathon/london-marathon.png)
 
 ### **[Week 17 - London Marathon](2023/Week_17_LondonMarathon)**
 ![Screenshot](2023/Week_17_LondonMarathon/london-marathon.png)
