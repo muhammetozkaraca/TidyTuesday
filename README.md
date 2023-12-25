@@ -13,7 +13,7 @@ The visualizations I made to contribute to the `TidyTuesday` challenge on an ann
 ![Screenshot](2023/Week_50_HolidayMovies/plot.png)
 
 ### **[Week 26 - US Populated Places](2023/Week_26_USPopulatedPlaces)**
-![Screenshot](2023/Week_26_USPopulatedPlaces/plot.png)
+![Screenshot](2023/Week_26_USPopulatedPlaces/plot-adding-elliptical-lines.png)
 
 ### **[Week 24 - SAFI Project](2023/Week_24_SAFIProject)**
 ![Screenshot](2023/Week_24_SAFIProject/plot.png)
