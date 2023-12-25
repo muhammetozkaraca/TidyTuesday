@@ -67,8 +67,8 @@ plot <- ggplot() +
   coord_sf(crs = st_crs("+proj=laea +lat_0=45 +lon_0=-100")) +
   scale_x_continuous(labels = function(x) paste0(x, "° W")) +
   scale_y_continuous(labels = function(y) paste0(y, "° N")) +
-  labs(title = "US Populated Places") +
-       # caption = "Source: GNIS | Plot: <span style='font-family:fa-brands'>&#xf09b;</span> muhammetozkaraca <span style='font-family:fa-brands'>&#xf099;</span> @muhammetozkrca | #TidyTuesday-Week 26") +
+  labs(title = "US Populated Places", 
+       caption = "Source: GNIS | Plot: <span style='font-family:fa-brands'>&#xf09b;</span> muhammetozkaraca <span style='font-family:fa-brands'>&#xf099;</span> @muhammetozkrca | #TidyTuesday-Week 26") +
   theme(plot.background = element_rect(fill = "lightblue", color = "lightblue"),
         panel.background = element_rect(fill = "lightblue", color = "lightblue"),
         plot.title = element_markdown(size = 100, hjust = 0.5, family = "title", face = "bold", linewidth = 0.3),
