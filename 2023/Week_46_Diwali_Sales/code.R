@@ -23,6 +23,12 @@ label_formatter <- function(x) {
   paste0(x / 1000, " K")
 }
 
+house %>%
+  group_by(Gender, `Age Group`) %>%
+  mutate(n = n()) %>%
+  select(Gender, `Age Group`, n) %>%
+  distinct()
+
 
 plot <- ggplot(house) +
   geom_jitter(aes(x = `Age Group`, y = Amount, color = Gender), 
@@ -38,21 +44,20 @@ plot <- ggplot(house) +
                      breaks = c("F", "M")) +
   scale_y_continuous(breaks = c(0, 5000, 10000, 15000, 20000, 25000), 
                      labels = label_formatter) +
+  scale_x_discrete(labels=c("**0-17**<br>(F=167, M=134)", "**18-25**<br>(F=1305, M=574)", "**26-35**<br>(F=3271, M=1272)", "**36-45**<br>(F=1581, M=705)", "**46-50**<br>(F=696, M=291)", "**51-55**<br>(F=554, M=278)", "**55+**<br>(F=273, M=155)")) +
   theme(plot.title = element_markdown(size = 120, family = "title"),
         plot.subtitle = element_markdown(size = 70, lineheight = 0.1, family = "subtitle"),
         plot.caption = element_markdown(linewidth = 0.01, hjust = 0.5, size = 45, family = "caption"),
         panel.grid.major.x = element_line(linetype = "dotted"),
         panel.grid.major.y = element_blank(),
         axis.text.x = element_markdown(size = 50, family = "caption"),
-        axis.text.y = element_markdown(size = 50), 
+        axis.text.y = element_markdown(size = 50, family = "caption", lineheight = 0.1, hjust = 0.5), 
         legend.title = element_markdown(size = 65, face = "bold", color = "#0F8B8D", family = "subtitle"),
-        legend.text = element_markdown(size = 65, family = "caption"),
+        legend.text = element_markdown(size = 65, family = "caption", face = "bold"),
         legend.position = c(0.12, 1),
         legend.spacing.x = unit(0.01, "cm"),
         legend.spacing.y = unit(0.01, "cm"))
 
 
-ggsave("/Users/muhammetozkaraca/Desktop/plot.png", dpi = 720,  height = 6, width = 8)
-
-
+ggsave("/Users/muhammetozkaraca/Desktop/plot.png", dpi = 720,  height = 6, width = 8.5)
   
