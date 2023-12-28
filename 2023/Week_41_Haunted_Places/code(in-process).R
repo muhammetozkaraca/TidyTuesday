@@ -21,19 +21,24 @@ haunted_places_top_5 <- haunted_places %>%
   arrange(desc(count))
 
 haunted_places_top_5 <- haunted_places_top_5[1:5, ] 
+haunted_places_top_5 %>%
+  uncount
+
+waffle_data_2 <- waffle_iron(haunted_places_top_5, aes_d(group = last_word))
+
 
 ggplot(haunted_places_top_5, aes(fill = last_word, values = count)) +
-  geom_waffle(color = "white", size = 0.01, na.rm = TRUE, nrows = 10) +
+  geom_waffle(color = "white", size = 0.0001, na.rm = TRUE, nrows = 10) +  # Adjusted size here
   facet_wrap(~last_word, nrow = 2) +
   theme_fivethirtyeight() +
   theme(panel.grid.major.x = element_blank(),
         panel.grid.major.y = element_blank(),
         axis.text.x = element_blank(),
         axis.text.y = element_blank(),
-        plot.margin = margin(0.1, 0.1, 0.1, 0.1, "cm"),
         legend.position = "none") +
   coord_fixed(ratio = 1)
-  
+
+
 
 ggsave("/Users/muhammetozkaraca/Desktop/plot.png", dpi = 720,  height = 2, width = 3)
 
