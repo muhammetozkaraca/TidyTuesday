@@ -37,6 +37,11 @@ The visualizations I made to contribute to the `TidyTuesday` challenge on an ann
 ### **[Week 17 - London Marathon](2023/Week_17_LondonMarathon)**
 ![Screenshot](2023/Week_17_LondonMarathon/london-marathon.png)
 
+### **[Week 11 - European Drug Development](2023/Week_11_European_Drug_Development)**
+![Screenshot](2023/Week_11_European_Drug_Development/plot.png)
+
+### **[Week 8 - Bob Ross Painting](2023/Week_8_Bob_Ross_Paintings)**
+![Screenshot](2023/Week_8_Bob_Ross_Paintings/plot.png)
 
 ### **[Week 7 - Hollywood Age Gap](2023/Week_7_HollywoodAge)**
 ![Screenshot](2023/Week_7_HollywoodAge/hollywood-movies.png)
